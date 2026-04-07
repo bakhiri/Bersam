@@ -572,69 +572,61 @@ function Hero() {
       <section
         id="accueil"
         ref={heroRef}
-        className="relative min-h-[calc(100vh-64px)] flex flex-col items-center pt-24 sm:pt-28 md:pt-[184px]"
+        className="relative min-h-[calc(100vh-64px)] flex flex-col items-center pt-16 sm:pt-20 md:pt-28"
       >
         <div className="fixed inset-0 -z-10 w-full h-full pointer-events-none" />
 
-        <div className="relative md:absolute md:inset-0 flex items-start justify-center z-10 pointer-events-none pt-6 sm:pt-10 md:pt-[80px] w-full">
-          <div className="text-center px-4 max-w-7xl w-full flex flex-col items-center justify-start mt-2 sm:mt-6 md:mt-[80px]">
-            <div className="mb-6 animate-fade-in">
+        <div className="w-full flex justify-center items-center mt-4 sm:mt-6 md:mt-8 px-4">
+          <div className="w-full max-w-[700px] md:max-w-[900px] aspect-[16/9] bg-white/5 rounded-lg mx-auto overflow-hidden relative">
+            <HeroSlideshow />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <Logo
-                src="photos/logo black.svg"
-                alt="BERSAM"
-                className="h-32 sm:h-40 md:h-64 lg:h-80 w-auto"
+                src="photos/logo white avec bande jaune.svg"
+                alt="Logo BERSAM"
+                className="h-32 sm:h-36 md:h-44 lg:h-52 w-auto drop-shadow-lg"
               />
             </div>
-            <p className="text-base sm:text-xl md:text-2xl lg:text-3xl font-medium text-white/90 max-w-5xl mx-auto leading-tight drop-shadow animate-slide-up">
-              Électricité • Sécurité • Photovoltaïque
-            </p>
-
-            {showCTAs && (
-              <div className="mt-6 sm:mt-8 md:mt-12 pointer-events-auto">
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a
-                    href="#/tertiaire"
-                    className="inline-flex items-center px-6 sm:px-8 py-3 bg-bersam-primary text-graphite font-semibold rounded-lg hover:bg-bersam-primary/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
-                  >
-                    Découvrir nos projets
-                  </a>
-                  <a
-                    href="#/contact"
-                    className="inline-flex items-center px-6 sm:px-8 py-3 bg-graphite text-white font-semibold rounded-lg hover:bg-graphite/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
-                  >
-                    Nous contacter
-                  </a>
-                </div>
-                <a
-                  href="#section-suivante"
-                  className="scroll-indicator hidden sm:grid place-items-center mt-3"
-                  aria-label="Scroller vers le bas"
-                >
-                  <svg
-                    className="scroll-arrow"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    style={{ width: "34px", height: "34px", fill: "#000" }}
-                  >
-                    <path d="M12 16.5l-7-7 1.4-1.4L12 13.7l5.6-5.6L19 9.5l-7 7z" />
-                  </svg>
-                </a>
-              </div>
-            )}
           </div>
         </div>
 
-        <div className="w-full flex justify-center items-center mt-8 sm:mt-12 md:mt-20 px-4">
-          <div className="w-full max-w-[1400px] aspect-[16/9] bg-white/5 rounded-lg mx-auto overflow-hidden relative opacity-60">
-            <HeroSlideshow />
+        {showCTAs && (
+          <div className="mt-4 sm:mt-5 md:mt-6 pointer-events-auto px-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="#/tertiaire"
+                className="inline-flex items-center px-6 sm:px-8 py-3 bg-bersam-primary text-graphite font-semibold rounded-lg hover:bg-bersam-primary/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                Découvrir nos projets
+              </a>
+              <a
+                href="#/contact"
+                className="inline-flex items-center px-6 sm:px-8 py-3 bg-graphite text-white font-semibold rounded-lg hover:bg-graphite/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                Nous contacter
+              </a>
+            </div>
+            <a
+              href="#section-suivante"
+              className="scroll-indicator hidden sm:grid place-items-center mt-2"
+              aria-label="Scroller vers le bas"
+            >
+              <svg
+                className="scroll-arrow"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                style={{ width: "34px", height: "34px", fill: "#000" }}
+              >
+                <path d="M12 16.5l-7-7 1.4-1.4L12 13.7l5.6-5.6L19 9.5l-7 7z" />
+              </svg>
+            </a>
           </div>
-        </div>
+        )}
 
-        <div className="text-center max-w-3xl relative z-20 mt-10 sm:mt-16 md:mt-28 pt-4 px-4">
+        <div className="text-center max-w-3xl relative z-20 mt-6 sm:mt-8 md:mt-10 pt-0 px-4">
           <p className="text-2xl md:text-3xl font-display font-semibold text-graphite mb-3">
             Réactivité • Expertise
           </p>
-          <p className="mt-6 text-textDim text-base lg:text-lg leading-relaxed text-left ml-0 sm:ml-4 md:ml-8">
+          <p className="mt-4 text-textDim text-base lg:text-lg leading-relaxed text-center">
             BERSAM prend en charge vos installations courants forts, courants
             faibles et communication IP, de la conception au support technique,
             pour une infrastructure performante et sécurisée.
