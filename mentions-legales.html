@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mentions Légales - BERSAM</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Archivo:wght@600;700&display=swap" rel="stylesheet">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+                font-size: 16px;
+                -webkit-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+                text-size-adjust: 100%;
+            }
+
+            body {
+                font-family: 'Inter', sans-serif;
+                line-height: 1.6;
+                background-color: #f9f8f6;
+                color: #1a1a1a;
+                /* Texture diagonale géométrique */
+                background-image: 
+                    linear-gradient(
+                        135deg,
+                        transparent 0%,
+                        transparent 48%,
+                        rgba(200, 200, 200, 0.03) 48%,
+                        rgba(200, 200, 200, 0.03) 52%,
+                        transparent 52%,
+                        transparent 100%
+                    ),
+                    linear-gradient(
+                        45deg,
+                        transparent 0%,
+                        transparent 48%,
+                        rgba(180, 180, 180, 0.02) 48%,
+                        rgba(180, 180, 180, 0.02) 52%,
+                        transparent 52%,
+                        transparent 100%
+                    );
+                background-size: 60px 60px, 80px 80px;
+                background-position: 0 0, 30px 30px;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Archivo', sans-serif;
+                font-weight: 700;
+                color: #1a1a1a;
+                letter-spacing: -0.5px;
+            }
+
+            /* Layout global */
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            /* Header */
+            nav {
+                position: fixed;
+                top: 0;
+                width: 100%;
+                background-color: #1a1a1a;
+                border-bottom: 1px solid rgba(201, 211, 70, 0.1);
+                color: white;
+                z-index: 50;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            }
+
+            nav .nav-container {
+                max-width: 1280px;
+                margin: 0 auto;
+                padding: 0 1rem;
+                display: flex;
+                height: 120px;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            nav .logo {
+                font-family: 'Archivo', sans-serif;
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: white;
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+            nav .logo:hover {
+                color: #c9d346;
+            }
+
+            nav a.nav-link {
+                color: rgba(255, 255, 255, 0.7);
+                text-decoration: none;
+                transition: color 0.3s;
+                border-bottom: 2px solid transparent;
+                padding-bottom: 0.25rem;
+            }
+
+            nav a.nav-link:hover {
+                color: #c9d346;
+                border-bottom-color: #c9d346;
+            }
+
+            /* Main content */
+            main {
+                flex: 1;
+                padding-top: 120px;
+            }
+
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 3rem 2rem;
+            }
+
+            .back-button {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.75rem 1.5rem;
+                background-color: #c9d346;
+                color: #1a1a1a;
+                text-decoration: none;
+                border-radius: 4px;
+                font-weight: 600;
+                transition: all 0.3s;
+                margin-bottom: 2rem;
+                border: 1px solid #c9d346;
+            }
+
+            .back-button:hover {
+                background-color: #c9d346;
+                opacity: 0.9;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
+                padding-bottom: 1rem;
+                border-bottom: 2px solid #c9d346;
+                display: inline-block;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                color: #1a1a1a;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 1.5rem;
+                margin-bottom: 0.75rem;
+                color: #1a1a1a;
+            }
+
+            p {
+                margin-bottom: 1rem;
+                line-height: 1.8;
+                color: #666666;
+            }
+
+            strong {
+                color: #c9d346;
+                font-weight: 600;
+            }
+
+            br {
+                margin: 0.5rem 0;
+            }
+
+            /* Footer */
+            footer {
+                background-color: #1a1a1a;
+                border-top: 1px solid rgba(201, 211, 70, 0.1);
+                color: white;
+                padding: 2rem;
+                text-align: center;
+            }
+
+            footer p {
+                color: rgba(255, 255, 255, 0.6);
+                margin: 0;
+            }
+
+            footer a {
+                color: #c9d346;
+                text-decoration: none;
+                transition: all 0.3s;
+            }
+
+            footer a:hover {
+                opacity: 0.8;
+                text-decoration: underline;
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                nav .nav-container {
+                    height: 100px;
+                }
+
+                h1 {
+                    font-size: 1.75rem;
+                }
+
+                h2 {
+                    font-size: 1.5rem;
+                }
+
+                .container {
+                    padding: 2rem 1rem;
+                }
+
+                main {
+                    padding-top: 100px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <nav>
+                <div class="nav-container">
+                    <a href="index.html" class="logo">BERSAM</a>
+                </div>
+            </nav>
+
+            <main>
+                <div class="container">
+                    <a href="index.html" class="back-button">← Retour à l'accueil</a>
+
+                    <h1>Mentions Légales</h1>
+
+                    <h2>Éditeur du site</h2>
+                    <p>Ce site est édité par la société BERSAM.</p>
+
+                    <h3>BERSAM</h3>
+                    <p>
+                        <strong>Adresse e-mail :</strong> contact@bersam.com<br />
+                        <strong>Téléphone :</strong> 04.90.14.11.41<br />
+                        <strong>Adresse :</strong> 335 rue des Joncs des bois, 84000 AVIGNON<br />
+                        <strong>Forme juridique :</strong> SAS, société par actions simplifiée<br />
+                        <strong>Capital social :</strong> 7622,45€<br />
+                        <strong>Numéro d'immatriculation au RCS :</strong> 350 720 413<br />
+                        <strong>Numéro de TVA intracommunautaire :</strong> FR20350720413<br />
+                    </p>
+
+                    <h3>Directeur de la publication</h3>
+                    <p>
+                        <strong>Responsable :</strong> Jean Hernandez
+                    </p>
+
+                    <h2>Hébergement</h2>
+                    <p>
+                        <strong>Nom de l'hébergeur :</strong> OVH <br />
+                        <strong>Adresse de l'hébergeur :</strong> 2, rue Kellermann, 59100 Roubaix, FRANCE
+                    </p>
+
+                    <h2>Propriété intellectuelle</h2>
+                    <p>
+                        L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés, y compris pour les documents téléchargeables et les représentations iconographiques et photographiques. La reproduction de tout ou partie de ce site sur un support électronique quel qu'il soit est formellement interdite sauf autorisation expresse du directeur de la publication.
+                    </p>
+
+                    <h2>Données personnelles</h2>
+                    <p>
+                        Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification et de suppression des données vous concernant. Pour l'exercer, veuillez nous contacter à l'une des adresses e-mail mentionnées ci-dessus.
+                    </p>
+
+                    <h2>Limitation de responsabilité</h2>
+                    <p>
+                        BERSAM s'efforce d'assurer l'exactitude et la mise à jour des informations publiées sur ce site. Cependant, elle ne peut garantir l'absence d'erreurs. BERSAM se réserve le droit de modifier à tout moment le contenu de ce site sans préavis.
+                    </p>
+                </div>
+            </main>
+
+            <footer>
+                <p>&copy; 2025 BERSAM. Tous droits réservés. | <a href="mentions-legales.html">Mentions Légales</a></p>
+            </footer>
+        </div>
+    </body>
+</html>

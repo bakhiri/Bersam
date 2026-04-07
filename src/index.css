@@ -1,0 +1,247 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Comportement de scroll natif */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Stabiliser la taille de base */
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: "Inter", sans-serif;
+    background-color: #f9f8f6;
+    color: #1a1a1a;
+    /* Texture diagonale finement striée */
+    background-image:
+        linear-gradient(
+            135deg,
+            transparent 0%,
+            transparent calc(50% - 0.5px),
+            rgba(150, 150, 150, 0.06) calc(50% - 0.5px),
+            rgba(150, 150, 150, 0.06) calc(50% + 0.5px),
+            transparent calc(50% + 0.5px),
+            transparent 100%
+        ),
+        linear-gradient(
+            45deg,
+            transparent 0%,
+            transparent calc(50% - 0.5px),
+            rgba(180, 180, 180, 0.04) calc(50% - 0.5px),
+            rgba(180, 180, 180, 0.04) calc(50% + 0.5px),
+            transparent calc(50% + 0.5px),
+            transparent 100%
+        );
+    background-size:
+        4px 4px,
+        6px 6px;
+    background-position:
+        0 0,
+        30px 30px;
+    position: relative;
+}
+
+/* Bug D fix: body::before is the single background image overlay (removed #background-image div) */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/photos/big.jpg");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.65;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Titres avec police institutionnelle */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+}
+
+/* Shape styles for floating geometric background */
+.shape {
+    position: absolute;
+    z-index: 1;
+    opacity: 0.08;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(135, 206, 235, 0.4), transparent);
+    box-shadow:
+        0 0 20px rgba(135, 206, 235, 0.3),
+        0 0 40px rgba(135, 206, 235, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+    animation: float 25s ease-in-out infinite;
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 35px solid rgba(135, 206, 235, 0.3);
+    background: none;
+    box-shadow: none;
+    filter: drop-shadow(0 0 20px rgba(135, 206, 235, 0.4));
+}
+
+.square {
+    border-radius: 0;
+    background: rgba(135, 206, 235, 0.2);
+}
+
+.hexagon {
+    width: 40px;
+    height: 23px;
+    background: rgba(135, 206, 235, 0.2);
+    position: relative;
+    box-shadow:
+        0 0 20px rgba(135, 206, 235, 0.3),
+        0 0 40px rgba(135, 206, 235, 0.2);
+}
+
+.hexagon:before,
+.hexagon:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+}
+
+.hexagon:before {
+    bottom: 100%;
+    border-bottom: 11.5px solid rgba(135, 206, 235, 0.2);
+}
+
+.hexagon:after {
+    top: 100%;
+    width: 0;
+    border-top: 11.5px solid rgba(135, 206, 235, 0.2);
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-15px) rotate(180deg);
+    }
+}
+
+/* Lightbox styles */
+.lightbox-backdrop {
+    background: rgba(0, 0, 0, 0.85);
+}
+
+select option {
+    background-color: #f9f8f6;
+    color: #1a1a1a;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.force-visible .transition-all {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Shapes container */
+#shapes-container {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Hero Title Animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-slide-up {
+    animation: slide-up 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
+}
+
+.drop-shadow-lg {
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.drop-shadow {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Scroll indicator styles (arrow) */
+.scroll-indicator {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 999px;
+    text-decoration: none;
+    z-index: 9999;
+}
+
+.scroll-arrow {
+    width: 34px;
+    height: 34px;
+    fill: #000;
+}
