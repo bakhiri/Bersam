@@ -170,6 +170,78 @@ const IMAGES = [
   },
 ];
 
+// SEO: Static meta for key routes
+const META_BY_ROUTE = {
+  "/": {
+    title:
+      "BERSAM — Électricien à Avignon | Courants Forts, Faibles & Photovoltaïque",
+    description:
+      "BERSAM, électricien général à Avignon depuis 1989. Installation électrique, sécurité, réseaux informatiques, photovoltaïque. Devis gratuit : 04 90 14 11 41.",
+  },
+  "/contact": {
+    title: "Contact — BERSAM Électricité Avignon | Devis Gratuit",
+    description:
+      "Contactez BERSAM pour un devis gratuit. Électricien à Avignon, 04 90 14 11 41, contact@bersam.com. Réponse rapide garantie.",
+  },
+};
+
+// SEO: Category meta configuration for galleries
+const CATEGORY_META_BY_ROUTE = {
+  "/tertiaire": {
+    title: "Projets Tertiaire — BERSAM Électricité Avignon",
+    category: "tertiaire",
+  },
+  "/renovations": {
+    title: "Projets Rénovations — BERSAM Électricité Avignon",
+    category: "renovations",
+  },
+  "/prestige": {
+    title: "Projets Prestige — BERSAM Électricité Avignon",
+    category: "prestige",
+  },
+};
+
+// SEO: Truncate meta descriptions to recommended length
+const truncateMeta = (text, max = 155) => {
+  if (!text) return "";
+  const normalized = text.replace(/\s+/g, " ").trim();
+  if (normalized.length <= max) return normalized;
+  return `${normalized.slice(0, max - 3).trim()}...`;
+};
+
+// SEO: Build dynamic description from gallery items
+const buildCategoryDescription = (category) => {
+  const items = IMAGES.filter((img) => img.category === category).slice(0, 3);
+  const altList = items
+    .map((img) => img.alt)
+    .filter(Boolean)
+    .join(", ");
+  const base = `BERSAM Avignon — ${altList}. Électricien depuis 1989.`;
+  return truncateMeta(base, 155);
+};
+
+// SEO: Resolve meta by hash route
+const getMetaForPath = (path) => {
+  if (path.startsWith("/realisation/")) {
+    const id = Number(path.split("/")[2]);
+    const item = IMAGES.find((img) => img.id === id);
+    if (item) {
+      return {
+        title: `${item.alt} — BERSAM Avignon`,
+        description: truncateMeta(item.desc || "", 155),
+      };
+    }
+  }
+  const categoryMeta = CATEGORY_META_BY_ROUTE[path];
+  if (categoryMeta) {
+    return {
+      title: categoryMeta.title,
+      description: buildCategoryDescription(categoryMeta.category),
+    };
+  }
+  return META_BY_ROUTE[path] || META_BY_ROUTE["/"];
+};
+
 // ─── Lightbox ────────────────────────────────────────────────────────────────
 const Lightbox = ({ isOpen, onClose, src, alt }) => {
   if (!isOpen) return null;
@@ -303,10 +375,13 @@ const MentionsLegalesModal = ({ isOpen, onClose }) => {
 };
 
 // ─── Reusable components ─────────────────────────────────────────────────────
-const Logo = ({ src, alt, className = "" }) => (
+// SEO: Allow intrinsic sizing on logos to reduce CLS
+const Logo = ({ src, alt, className = "", width, height }) => (
   <img
     src={src}
     alt={alt}
+    width={width}
+    height={height}
     className={classNames("block w-auto object-contain", className)}
   />
 );
@@ -327,7 +402,14 @@ const GlowButton = ({ children, onClick, variant = "primary", href }) => {
   );
 };
 
-const SectionHeader = ({ kicker, title, subtitle, gradient = "bersam" }) => (
+// SEO: Allow heading level control to preserve proper hierarchy per route
+const SectionHeader = ({
+  kicker,
+  title,
+  subtitle,
+  gradient = "bersam",
+  titleAs: TitleTag = "h2",
+}) => (
   <div className="mb-12">
     <div
       className={classNames(
@@ -337,9 +419,9 @@ const SectionHeader = ({ kicker, title, subtitle, gradient = "bersam" }) => (
     >
       {kicker}
     </div>
-    <h2 className="font-display font-bold text-5xl lg:text-6xl tracking-tight text-graphite mb-4">
+    <TitleTag className="font-display font-bold text-5xl lg:text-6xl tracking-tight text-graphite mb-4">
       {title}
-    </h2>
+    </TitleTag>
     {subtitle && (
       <p className="mt-3 text-graphite/70 text-base lg:text-lg leading-relaxed max-w-2xl">
         {subtitle}
@@ -453,14 +535,6 @@ function RealisationDetail() {
           >
             Retour à l'accueil
           </GlowButton>
-          {item.tag && (
-            <GlowButton
-              variant={item.tag === "bersam" ? "primary" : "secondary"}
-              href={`#/${item.tag}`}
-            >
-              Voir {item.tag.toUpperCase()}
-            </GlowButton>
-          )}
         </div>
       </div>
     </section>
@@ -484,7 +558,9 @@ function Navbar({ links }) {
             <a href="#/" aria-label="Aller à l'accueil">
               <Logo
                 src="photos/logo white avec bande jaune.svg"
-                alt="Logo BERSAM"
+                alt="Logo BERSAM - Électricien Avignon"
+                width={112}
+                height={112}
                 className="h-28 w-28 md:h-32 md:w-32 self-center"
               />
             </a>
@@ -494,6 +570,7 @@ function Navbar({ links }) {
               <a
                 key={l.to}
                 href={`#${l.to}`}
+                aria-current={path === l.to ? "page" : undefined}
                 className={classNames(
                   "text-lg font-semibold transition-all duration-300 relative pb-1 after:absolute after:bottom-0 after:left-0 after:h-px after:transition-all after:duration-300",
                   path === l.to
@@ -533,6 +610,7 @@ function Navbar({ links }) {
                 <a
                   key={l.to}
                   href={`#${l.to}`}
+                  aria-current={path === l.to ? "page" : undefined}
                   className={classNames(
                     "px-2 py-2 rounded-xs hover:bg-white/10 hover:text-bersam-primary text-base transition-colors",
                     path === l.to
@@ -584,7 +662,9 @@ function Hero() {
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <Logo
                 src="photos/logo white avec bande jaune.svg"
-                alt="Logo BERSAM"
+                alt="Logo BERSAM - Électricien Avignon"
+                width={208}
+                height={208}
                 className="h-32 sm:h-36 md:h-44 lg:h-52 w-auto drop-shadow-lg"
               />
             </div>
@@ -625,9 +705,11 @@ function Hero() {
         )}
 
         <div className="text-center max-w-3xl relative z-20 mt-6 sm:mt-8 md:mt-10 pt-0 px-4">
-          <p className="text-2xl md:text-3xl font-display font-semibold text-graphite mb-3">
-            Réactivité • Expertise
-          </p>
+          {/* SEO: Main H1 for homepage intent */}
+          <h1 className="text-2xl md:text-3xl font-display font-semibold text-graphite mb-3">
+            Électricien à Avignon depuis 1989 — Courants Forts, Faibles &
+            Photovoltaïque
+          </h1>
           <p className="mt-4 text-textDim text-base lg:text-lg leading-relaxed text-center">
             BERSAM prend en charge vos installations courants forts, courants
             faibles et communication IP, de la conception au support technique,
@@ -676,12 +758,16 @@ function HeroSlideshow() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
+      {/* SEO: Prioritize first LCP image and fix intrinsic size */}
       <img
         key={current.id}
         src={current.src}
         alt={current.alt}
         className="w-full h-full object-cover rounded-lg slide-fade"
         loading="eager"
+        fetchPriority={idx === 0 ? "high" : "auto"}
+        width={1600}
+        height={900}
       />
       <div className="absolute left-3 bottom-3 bg-black/40 text-white text-xs px-2 py-1 rounded">
         {current.alt}
@@ -829,7 +915,9 @@ function BERSAM() {
           <div className="flex items-center gap-3 mb-4">
             <Logo
               src="photos/logo black.svg"
-              alt="Logo BERSAM"
+              alt="Logo BERSAM - Électricien Avignon"
+              width={64}
+              height={64}
               className="h-16 w-16 md:h-20 md:w-20 self-center ml-2 md:ml-3"
             />
             <div className="h-6 w-px bg-white/10" />
@@ -923,25 +1011,43 @@ function Gallery() {
               className="relative overflow-hidden rounded-lg border border-white/10 bg-white/5"
             >
               <div className="group">
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  loading="lazy"
-                  className={`w-full h-80 object-cover transition-transform duration-500 ${
-                    img.id === 12 ? "scale-125" : "group-hover:scale-[1.03]"
-                  }`}
-                  style={
-                    img.id === 1 ? { objectPosition: "50% 30%" } : undefined
-                  }
-                  onClick={() =>
-                    setLightbox({ open: true, src: img.src, alt: img.alt })
-                  }
-                />
+                {/* SEO: Indexable link to project detail */}
+                <a href={`#/realisation/${img.id}`} className="block">
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    loading="lazy"
+                    width={640}
+                    height={320}
+                    className={`w-full h-80 object-cover transition-transform duration-500 ${
+                      img.id === 12 ? "scale-125" : "group-hover:scale-[1.03]"
+                    }`}
+                    style={
+                      img.id === 1 ? { objectPosition: "50% 30%" } : undefined
+                    }
+                  />
+                </a>
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-t from-black/50 to-transparent" />
               </div>
               <div className="p-3 border-t border-white/10">
-                <h4 className="text-base font-semibold mb-2">{img.alt}</h4>
+                <h3 className="text-base font-semibold mb-2">
+                  <a
+                    href={`#/realisation/${img.id}`}
+                    className="hover:text-bersam-primary transition-colors"
+                  >
+                    {img.alt}
+                  </a>
+                </h3>
                 <p className="text-sm text-textDim">{img.desc || "Projet"}</p>
+                <button
+                  type="button"
+                  className="mt-2 text-xs font-semibold text-bersam-primary hover:text-bersam-accent transition-colors"
+                  onClick={() =>
+                    setLightbox({ open: true, src: img.src, alt: img.alt })
+                  }
+                >
+                  Aperçu
+                </button>
               </div>
             </div>
           ))}
@@ -974,11 +1080,13 @@ const createCategoryGallery = (category, title, kicker) => {
     return (
       <section id="realisations" ref={ref} className="py-28">
         <div className="mx-auto max-w-7xl px-4">
+          {/* SEO: Use H1 for standalone route section title */}
           <SectionHeader
             kicker={kicker}
             title={title}
             subtitle="Découvrez quelques projets représentatifs de nos différents domaines d'intervention."
             gradient="bersam"
+            titleAs="h1"
           />
           <div
             className={classNames(
@@ -992,26 +1100,42 @@ const createCategoryGallery = (category, title, kicker) => {
                 className="relative overflow-hidden rounded-sm border border-graphite/10 bg-white shadow-soft hover:shadow-architectural transition-all duration-300 cursor-pointer group"
               >
                 <div className="overflow-hidden">
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    loading="lazy"
-                    className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
-                    style={
-                      img.id === 1 ? { objectPosition: "50% 30%" } : undefined
-                    }
-                    onClick={() =>
-                      setLightbox({ open: true, src: img.src, alt: img.alt })
-                    }
-                  />
+                  {/* SEO: Indexable link to project detail */}
+                  <a href={`#/realisation/${img.id}`} className="block">
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      loading="lazy"
+                      width={640}
+                      height={320}
+                      className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
+                      style={
+                        img.id === 1 ? { objectPosition: "50% 30%" } : undefined
+                      }
+                    />
+                  </a>
                 </div>
                 <div className="p-6 border-t border-graphite/10">
-                  <h4 className="text-base font-semibold mb-2 text-graphite group-hover:text-bersam-primary transition-colors duration-300">
-                    {img.alt}
-                  </h4>
+                  <h3 className="text-base font-semibold mb-2 text-graphite group-hover:text-bersam-primary transition-colors duration-300">
+                    <a
+                      href={`#/realisation/${img.id}`}
+                      className="hover:text-bersam-primary transition-colors"
+                    >
+                      {img.alt}
+                    </a>
+                  </h3>
                   <p className="text-sm text-graphite/70">
                     {img.desc || "Projet"}
                   </p>
+                  <button
+                    type="button"
+                    className="mt-2 text-xs font-semibold text-bersam-primary hover:text-bersam-accent transition-colors"
+                    onClick={() =>
+                      setLightbox({ open: true, src: img.src, alt: img.alt })
+                    }
+                  >
+                    Aperçu
+                  </button>
                 </div>
               </div>
             ))}
@@ -1245,10 +1369,12 @@ function Contact() {
   return (
     <section id="contact" ref={ref} className="py-20">
       <div className="mx-auto max-w-7xl px-4">
+        {/* SEO: Use H1 for standalone contact route */}
         <SectionHeader
           kicker="Contact"
           title="Entrons en contact"
           gradient="bersam"
+          titleAs="h1"
         />
 
         <div
@@ -1309,7 +1435,9 @@ function Footer({ onMentionsClick }) {
           <div className="flex items-center justify-center md:justify-start gap-4">
             <Logo
               src="photos/logo white avec bande jaune.svg"
-              alt="Logo BERSAM"
+              alt="Logo BERSAM - Électricien Avignon"
+              width={112}
+              height={112}
               className="h-28 w-28 md:h-32 md:w-32 self-center ml-2 md:ml-3"
             />
           </div>
@@ -1369,6 +1497,26 @@ function App() {
     }
   }, []);
   const path = useHashPath();
+
+  // SEO: Update title and meta tags on hash route changes
+  useEffect(() => {
+    const meta = getMetaForPath(path);
+    if (!meta) return;
+    document.title = meta.title;
+
+    const setMetaContent = (selector, content) => {
+      const el = document.querySelector(selector);
+      if (el && content) {
+        el.setAttribute("content", content);
+      }
+    };
+
+    setMetaContent('meta[name="description"]', meta.description);
+    setMetaContent('meta[property="og:title"]', meta.title);
+    setMetaContent('meta[property="og:description"]', meta.description);
+    setMetaContent('meta[name="twitter:title"]', meta.title);
+    setMetaContent('meta[name="twitter:description"]', meta.description);
+  }, [path]);
 
   useEffect(() => {
     if (path === "/") {
