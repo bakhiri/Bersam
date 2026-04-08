@@ -596,13 +596,13 @@ function Hero() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="#/tertiaire"
-                className="inline-flex items-center px-6 sm:px-8 py-3 bg-bersam-primary text-graphite font-semibold rounded-lg hover:bg-bersam-primary/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="inline-flex items-center justify-center text-center px-6 sm:px-8 py-3 bg-bersam-primary text-graphite font-semibold rounded-lg hover:bg-bersam-primary/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 Découvrir nos projets
               </a>
               <a
                 href="#/contact"
-                className="inline-flex items-center px-6 sm:px-8 py-3 bg-graphite text-white font-semibold rounded-lg hover:bg-graphite/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="inline-flex items-center justify-center text-center px-6 sm:px-8 py-3 bg-graphite text-white font-semibold rounded-lg hover:bg-graphite/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 Nous contacter
               </a>
