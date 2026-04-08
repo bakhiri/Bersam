@@ -481,11 +481,13 @@ function Navbar({ links }) {
       <div className="mx-auto max-w-7xl px-4">
         <div className="relative flex h-[84px] items-center justify-between">
           <div className="flex items-center gap-4">
-            <Logo
-              src="photos/logo white avec bande jaune.svg"
-              alt="Logo BERSAM"
-              className="h-28 w-28 md:h-32 md:w-32 self-center"
-            />
+            <a href="#/" aria-label="Aller à l'accueil">
+              <Logo
+                src="photos/logo white avec bande jaune.svg"
+                alt="Logo BERSAM"
+                className="h-28 w-28 md:h-32 md:w-32 self-center"
+              />
+            </a>
           </div>
           <div className="hidden md:flex items-center gap-7">
             {links.map((l) => (
