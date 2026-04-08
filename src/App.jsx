@@ -313,7 +313,7 @@ const Logo = ({ src, alt, className = "" }) => (
 
 const GlowButton = ({ children, onClick, variant = "primary", href }) => {
   const base =
-    "inline-flex items-center justify-center rounded-sm px-6 py-3 font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:opacity-60";
+    "inline-flex items-center justify-center text-center rounded-sm px-6 py-3 font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:opacity-60";
   const styles =
     variant === "secondary"
       ? "bg-graphite text-cream hover:bg-graphite/90 border border-graphite"
@@ -1182,7 +1182,7 @@ function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-bersam-primary text-graphite font-semibold py-3 px-6 rounded-lg hover:bg-bersam-primary/90 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-bersam-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full text-center bg-bersam-primary text-graphite font-semibold py-3 px-6 rounded-lg hover:bg-bersam-primary/90 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-bersam-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isSubmitting ? "Envoi en cours..." : "Envoyer votre demande"}
       </button>
